@@ -2,20 +2,21 @@ name: Run US Stock Market Analysis
 
 on:
   schedule:
-    # Spustí se od pondělí do pátku ve 21:30 UTC (22:30 středoevropského času)
+    # Runs Monday to Friday at 21:30 UTC (22:30 CET)
     - cron: '30 21 * * 1-5'
-  workflow_dispatch: # Umožní vám spustit skript kdykoliv ručně jedním kliknutím
+  workflow_dispatch: # Allows manual trigger
 
 jobs:
   run-analysis:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # Explicitně povolí zápis do repozitáře
+      contents: write
     steps:
     - name: Checkout repository code
       uses: actions/checkout@v4
       with:
-        persist-credentials: true # Zajistí předání tokenu pro git push
+        persist-credentials: true
+        fetch-depth: 0 # Fetches all history so rebase/pull works perfectly
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -34,17 +35,21 @@ jobs:
       run: |
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "actions@github.com"
+        
         git add index.html
         
-        # Pokud nejsou žádné změny v index.html, skript bezpečně skončí
+        # If no changes were made to index.html, exit gracefully
         if git diff-index --quiet HEAD; then
-          echo "Žádné změny k uložení."
+          echo "No changes detected. Skipping commit."
           exit 0
         fi
         
         git commit -m "Auto-update: Nová analýza trhu"
         
-        # KLÍČOVÝ KROK: Stáhne případné změny z GitHubu a hladce je sloučí
-        git pull --rebase origin main
+        # Fetch the absolute newest remote state and rebase our index.html on top of it
+        git fetch origin main
+        git rebase origin/main
         
+        # Push the synchronized changes
         git push origin main
+   
