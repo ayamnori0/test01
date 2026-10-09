@@ -1,0 +1,36 @@
+name: Run US Stock Market Analysis
+
+on:
+  schedule:
+    # Spustí se od pondělí do pátku ve 21:30 UTC (22:30 středoevropského času)
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch: # Umožní vám spustit skript kdykoliv ručně jedním kliknutím
+
+jobs:
+  run-analysis:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Analysis Script
+      run: python script.py
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add index.html
+        # Pokud se index.html nezměnil, skript nespadne a commit přeskočí
+        git diff-index --quiet HEAD || git commit -m "Auto-update: Nová analýza trhu"
+        git push
