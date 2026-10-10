@@ -16,13 +16,13 @@ jobs:
                         # Bez tohoto oprávnění by závěrečný krok git push selhal s chybou zamítnutí přístupu.
     steps:
     - name: Checkout repository code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4.2.2
       with:
         persist-credentials: true
         fetch-depth: 0 # Fetches all history so rebase/pull works perfectly
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v5.4.0
       with:
         python-version: '3.10'
 
