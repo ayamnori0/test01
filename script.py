@@ -125,10 +125,10 @@ def main():
 </html>
 """
 
-    with open("index0.html", "w", encoding="utf-8") as f:
+    with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print("Analýza dokončena. Soubor index0.html byl úspěšně vygenerován.")
+    print("Analýza dokončena. Soubor index.html byl úspěšně vygenerován.")
 
 
 # Kód zde se spustí jen při přímém spuštění tohoto souboru
