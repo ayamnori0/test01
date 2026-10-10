@@ -7,6 +7,9 @@ on:
   workflow_dispatch: # Allows manual trigger
                      # Přidá do rozhraní GitHubu šedé tlačítko "Run workflow", 
                      # takže analýzu můžete kliknutím spustit kdykoliv sami.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   run-analysis:
@@ -14,6 +17,9 @@ jobs:
     permissions:
       contents: write   # Dává tomuto automatickému procesu právo zápisu (write) do vašeho repozitáře. 
                         # Bez tohoto oprávnění by závěrečný krok git push selhal s chybou zamítnutí přístupu.
+      pages: write
+      id-token: write
+      
     steps:
     - name: Checkout repository code
       uses: actions/checkout@v5
