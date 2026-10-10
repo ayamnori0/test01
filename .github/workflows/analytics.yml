@@ -5,12 +5,15 @@ on:
     # Runs Monday to Friday at 21:30 UTC (22:30 CET)
     - cron: '30 21 * * 1-5'
   workflow_dispatch: # Allows manual trigger
+                     # Přidá do rozhraní GitHubu šedé tlačítko "Run workflow", 
+                     # takže analýzu můžete kliknutím spustit kdykoliv sami.
 
 jobs:
   run-analysis:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write   # Dává tomuto automatickému procesu právo zápisu (write) do vašeho repozitáře. 
+                        # Bez tohoto oprávnění by závěrečný krok git push selhal s chybou zamítnutí přístupu.
     steps:
     - name: Checkout repository code
       uses: actions/checkout@v4
@@ -24,7 +27,7 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: |
+      run: |                          # Znak | umožňuje napsat více příkazů pod sebe.
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -36,17 +39,23 @@ jobs:
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "actions@github.com"
         
-        git add index.html
+        git add index0.html   # Označí nově vygenerovaný (nebo upravený) soubor index0.html k uložení.
         
-        # If no changes were made to index.html, exit gracefully
+        # Zkontroluje, zda se index0.html vůbec změnil (např. pokud o víkendu trhy stály a data jsou stejná). 
+        # Pokud změny nejsou, skript bezpečně a čistě skončí (exit 0), aniž by vytvářel prázdné commity.
         if git diff-index --quiet HEAD; then
           echo "No changes detected. Skipping commit."
           exit 0
         fi
-        
+
+        # Vytvoří nový commit (uložený bod) s tímto popisem.
         git commit -m "Auto-update: Nová analýza trhu"
         
-        # Fetch the absolute newest remote state and rebase our index.html on top of it
+        # Fetch the absolute newest remote state and rebase our index0.html on top of it
+        # Synchronizace. Stáhne nejnovější stav z GitHubu (fetch). Příkaz rebase zajistí, 
+        # že pokud jste mezitím vy sami udělali v repozitáři nějakou jinou změnu přes web, 
+        # bot vezme svůj nově vytvořený index.html a čistě ho "posadí" na absolutní 
+        # vrchol historie nad vaše změny. Tím se předchází konfliktům v Gitu.
         git fetch origin main
         git rebase origin/main
         
