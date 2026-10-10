@@ -39,7 +39,7 @@ jobs:
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "actions@github.com"
         
-        git add index0.html   # Označí nově vygenerovaný (nebo upravený) soubor index0.html k uložení.
+        git add index.html   # Označí nově vygenerovaný (nebo upravený) soubor index.html k uložení.
         
         # Zkontroluje, zda se index0.html vůbec změnil (např. pokud o víkendu trhy stály a data jsou stejná). 
         # Pokud změny nejsou, skript bezpečně a čistě skončí (exit 0), aniž by vytvářel prázdné commity.
@@ -51,7 +51,7 @@ jobs:
         # Vytvoří nový commit (uložený bod) s tímto popisem.
         git commit -m "Auto-update: Nová analýza trhu"
         
-        # Fetch the absolute newest remote state and rebase our index0.html on top of it
+        # Fetch the absolute newest remote state and rebase our index.html on top of it
         # Synchronizace. Stáhne nejnovější stav z GitHubu (fetch). Příkaz rebase zajistí, 
         # že pokud jste mezitím vy sami udělali v repozitáři nějakou jinou změnu přes web, 
         # bot vezme svůj nově vytvořený index.html a čistě ho "posadí" na absolutní 
