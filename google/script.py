@@ -164,4 +164,4 @@ def generate_stock_chart_html(ticker_symbol: str = "GOOG", days_history: int = 1
     print(f"✔️ HTML stránka bola úspešne vytvorená a uložená ako '{output_filename}'")
 
 # Spustenie funkcie
-generate_stock_chart_html(ticker_symbol="GOOG", days_history=10, output_filename="index2.html")
+generate_stock_chart_html(ticker_symbol="GOOG", days_history=10, output_filename="index.html")
