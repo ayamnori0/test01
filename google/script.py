@@ -94,6 +94,11 @@ def generate_stock_chart_html(ticker_symbol: str = "GOOG", days_history: int = 1
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ########################################################## Zákaz cachování pro prohlížeče -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!-- ########################################################## Zákaz cachování pro prohlížeče -->
     <title>Akcie {ticker_symbol} - Prehľad</title>
     <style>
         body {{
