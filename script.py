@@ -90,7 +90,7 @@ def main():
 </head>
 <body>
     <div class="container">
-        <h1>Denní analýza: AAPL vs GOOG</h1>
+        <h1>Denní analýza 02: AAPL vs GOOG</h1>
         <div class="meta">Poslední aktualizace: {now_str}</div>
 
         <div class="result-box">
