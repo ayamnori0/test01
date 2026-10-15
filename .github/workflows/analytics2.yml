@@ -3,13 +3,13 @@ name: Update GOOG Stock Chart
 on:
   schedule:
     # Runs Monday to Friday at 21:30 UTC (22:30 CET)
-    - cron: '31 21 * * 1-5'
+    - cron: '12 02 * * 2-6'
   workflow_dispatch: # Allows manual trigger
                      # Přidá do rozhraní GitHubu šedé tlačítko "Run workflow", 
                      # takže analýzu můžete kliknutím spustit kdykoliv sami.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   run-analysis:
